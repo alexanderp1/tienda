@@ -1,0 +1,54 @@
+{% extends 'layouts/tienda.html' %}
+
+{% load cart_tags %}
+
+{% block title %}Tienda{% endblock %}
+
+{% block content %}   
+
+    <div class="row">
+        <div class="col-9">
+            <!--Aqui empieza el cuadro de busqueda-->
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 search">
+                        <form method="get">
+                            <div id="custom-search-input">
+                                <div class="input-group col-md-12">
+                                    <input type="text" class="form-control" placeholder="Buscar..." name="buscar">
+                                    <span class="input-group-list">
+                                        <i class="icon icon-search"></i>
+                                        <button type="submit" class="boton btn-success">Buscar</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <!--Termina cuadro de busqueda-->
+            <div class="row">
+                {% for product in products %}
+                    <div class="col-md-3 col-sm-12 col-lg-4">
+                        <div class="card" style="width: 100%" position="relative" display="flex" padding="1rem">
+                            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" width="60px" height="200px"/>
+                            <div class="card-body">
+                                <h5 class="card-title text-center" > {{ product.name }}</h5>
+                                <p class="card-text" style="height: 60px">{{ product.detail }}</p>
+                                <p class="card-text text-center"><b>Precio: {{ product.price }}$ </b></p>
+                            </div>
+                            <div class='card-footer text-center'>
+                                <a href="{% url 'cart:add_product' product.id %}" class="btn btn-success">Añadir al carrito</a>
+                            </div>
+                        </div>
+                    </div> 
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="col-3">
+            {% include "cart/widget.html" %}
+        </div>      
+    </div>
+{% endblock %}
