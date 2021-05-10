@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
 from products.models import Product
-from django.contrib.auth.decorators import login_required
+from orders.models import Order, OrderLine
+#from django.contrib.auth.decorators import login_required
 from .cart import Cart
 from django.views.generic.list import ListView
 
 
-@login_required(login_url="/autenticacion/login")
+#@login_required(login_url="/autenticacion/login")
 def add_product(request, product_id):
     cart = Cart(request)
     product = Product.objects.get(id=product_id)
@@ -15,7 +16,7 @@ def add_product(request, product_id):
     
 
 
-@login_required(login_url="/autenticacion/login")
+#@login_required(login_url="/autenticacion/login")
 def remove_product(request, product_id):
     cart = Cart(request)
     product = Product.objects.get(id=product_id)
@@ -23,7 +24,7 @@ def remove_product(request, product_id):
     return redirect("listado_productos")
 
 
-@login_required(login_url="/autenticacion/login")
+#@login_required(login_url="/autenticacion/login")
 def decrement_product(request, product_id):
     cart = Cart(request)
     product = Product.objects.get(id=product_id)
@@ -31,7 +32,7 @@ def decrement_product(request, product_id):
     return redirect("listado_productos")
 
 
-@login_required(login_url="/autenticacion/login")
+#@login_required(login_url="/autenticacion/login")
 def clear_cart(request):
     cart = Cart(request)
     cart.clear()

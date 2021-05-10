@@ -1,0 +1,143 @@
+{% extends 'layouts/tienda.html' %}
+
+{% load cart_tags %}
+
+{% block title %}Tienda{% endblock %}
+
+
+{% block content %}  
+
+<style>
+
+.centrar-texto {
+    text-align: center;
+}
+
+.texto-nosotros blockquote {
+    font-weight: 800;
+    font-size: 2rem;
+    margin: 0;
+    padding: 0rem 0 2rem 0;
+}
+
+
+
+#contenidos-paginas{
+    background: #F2F2F2;
+}
+
+#centro3{
+    width: 800px;
+    margin: auto; border: 0px solid; height: auto; overflow: hidden;
+    text-align: center;
+}
+
+.descripcion-pagina{
+    color: black;
+}
+
+.texto-nosotros{
+    text-align: left;
+}
+
+
+
+.img-nosotros{
+    float: left;
+    margin-right: 7px;
+}
+
+.encabezados {
+    font-family: 'Arial black';
+    font-size: 30px;
+}
+
+.t1{
+    color: #2E2E2E;
+}
+
+.t2{
+    color: #0489B1;
+}
+
+#filosofia{
+    height: auto; overflow: hidden;
+}
+
+#mision, #vision{
+    width: 245px;
+    height: auto; overflow: hidden;
+    border: 1px solid #ccc;
+    display: inline-block;
+    border-radius: 5px;
+}
+
+
+
+</style>
+
+<div id="contenidos-paginas">
+    <div id="centro3">
+        <h2>
+            <em class="encabezados t1">Sobre</em>
+            <em class="encabezados t2">Nosotros</em>
+        </h2>
+        <p class="descripcion-pagina">
+            Tienda Priscila
+        </p>
+        <hr>
+
+        <div id="contenido-nosotros">
+            <p class="descripcion-pagina texto-nosotros">
+                <br>
+                <img src="/media/products/logo2.png" class="img-nosotros">
+                <div class="texto-nosotros">
+                <blockquote>2 Años de Experiencia</blockquote>
+                El negocio empezó como un emprendimiento, en agosto del año 2019, en su
+                inicio comenzó siendo una pequeña tienda dirigida por su propietaria la 
+                Sra. Priscila Sánchez que, junto a su esposo, fueron saliendo adelante que 
+                con mucho esfuerzo se fue consolidando cada vez más, los vecinos se sienten
+                muy cómodos teniendo un lugar cercano donde hacer las compras.
+                El principal objetivo de la tienda es ofrecer a la comunidad productos de 
+                mas alta calidad procurando la satisfacción de los clientes.
+
+                Se encuentra ubicada en la provincia de El Oro, Cantón Marcabelí entre las
+                calles Alto Cenepa y calle Piñas.
+                Diagonal al Coliseo Efrén Calozuma Armijos
+                
+                </div>
+            </p>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+
+        </div>
+        <div id="filosofia">
+            <div id="mision">
+                <img src="/media/products/mision2.png" class="img-filosofia">
+                <br>
+                <p>
+                Impulsar el desarrollo de nuestros clientes ofreciéndoles productos y servicios
+                que solucionen sus necesidades al precio justo aumentandola rentabilidad,
+                profesionalidad e imagen de nuestra tienda.
+                </p>
+            </div>
+
+            <div id="vision">
+                <img src="/media/products/vision.png" class="img-filosofia">
+                <br>
+                <p>
+                Alcanzar el reconocimiento prestigio nacional, sobresalir sobre más tiendas y 
+                ser la primera opción de compra de nuestros clientes, de igual forma posicionarnos 
+                en el país como lideres en el comercio.
+                </p>
+            </div>
+        </div>
+        <br>
+    </div>
+</div>
+{% endblock %}

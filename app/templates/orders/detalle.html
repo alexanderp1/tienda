@@ -8,33 +8,72 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h1 class="text-center text-muted">Detalle del pedido {{ order.id }}</h1>
-                <table class="table table-bordered">
+                <h1 class="text-center text-muted">Proforma del Pedido N°: {{ order.id }}</h1>
+                <br>
+                <h3 class="text-center text-muted">Estado del Pedido
+                {% if order.comprado %}
+                <th><span class="badge badge-success">COMPLETADA</span></th>
+                {% else %}
+                <th><span class="badge badge-warning">PENDIENTE</span></th>
+                {% endif %}  
+                </h3>
+                <br>
+                <p>
+                    <b>DETALLE DE PEDIDO:</b> {{ order.id }}<br>
+                    <b>FECHA DE VENTA:</b> {{ order.created_at|date:'d/m/Y H:i' }}<br>
+                    <b>CLIENTE:</b> {{ order.user|upper }}<br>
+                </p>
+                <table id="invoice">
                     <thead>
-                        <tr class="text-center">
-                            <th>Producto</th>
-                            <th>Cantidad</th>
-                            <th>Precio/u</th>
-                            <th>Precio total</th>
+                        <tr>
+                            <th style="width: 10%;">PRODUCTO</th>
+                            <th style="width: 10%;">CANTIDAD</th>
+                            <th style="width: 10%;">PRECIO/U</th>
+                            <th style="width: 10%;">PRECIO TOTAL</th>
                         </tr>
                     </thead>
 
                     <tbody>
                         {% for order_line in order.orderline_set.all %}
-                           <tr class="text-center">
+                           <tr {% if forloop.first %}style="padding-top: 3px;" {% endif %}>
                                 <td>{{ order_line.product.name }}</td>
                                 <td>{{ order_line.quantity }}</td>
                                 <td>{{ order_line.product.price|money_format:"$" }}</td>
-                                <td>{{ order_line.product.price|multiply:order_line.quantity|money_format:"$" }}</td>
+                                <td style="text-align: center;">{{ order_line.product.price|multiply:order_line.quantity|money_format:"$" }}</td>
                             </tr>
                         {% endfor %}
                     </tbody>
-
+                    
                     <tfoot>
+                        <tr style="border-top: 1px solid black; padding-top: 6px; text-align: left;">
+                            <br>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <th class="text-center">Subtotal</th>
+                            <th class="text-center">
+                                {{ order.total|money_format:"$" }}
+                            </th>
+                        </tr>
                         <tr>
                             <td>&nbsp;</td>
                             <td>&nbsp;</td>
-                            <th class="text-center">Precio total</th>
+                            <th class="text-center">Descuento</th>
+                            <th class="text-center">
+                                -
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <th class="text-center">IVA</th>
+                            <th class="text-center">
+                                -
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <th class="text-center">Total a Pagar</th>
                             <th class="text-center">
                                 {{ order.total|money_format:"$" }}
                             </th>
@@ -42,6 +81,42 @@
                     </tfoot>
                 </table>
             </div>
+            <br>
+            <p>
+                Forma de pago : Contrarembolso
+                <br>
+                Tiempo de Validez : 5 días calendario
+            </p>
         </div>
     </div>
+
+    <style>
+        .img-invoice {
+            width: 50px;
+            text-align: center;
+            margin: 0 auto;
+        }
+    
+        .head {
+            text-align: center;
+            text-transform: uppercase;
+        }
+    
+        #invoice thead tr th {
+            text-align: left;
+            border-bottom: 1px solid black;
+            border-top: 1px solid black;
+            padding-top: 4px;
+        }
+    
+        #invoice thead tr {
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+    
+        #invoice tbody tr {
+            padding: 0;
+        }
+    </style>
+
 {% endblock %}

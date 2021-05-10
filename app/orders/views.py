@@ -7,8 +7,21 @@ from django.utils.html import strip_tags
 from django.views.generic.list import ListView
 from django.views.generic import DeleteView
 from django.views.generic import DetailView
-from .models import Order, OrderLine
+from .models import Order, OrderLine, Product
 from cart.cart import Cart
+
+from django.shortcuts import render
+from django.views.generic import ListView
+from django.views.generic import View
+from django.http import HttpResponse
+from django.template.loader import get_template
+
+import os
+from django.conf import settings
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+
 
 
 # Create your views here.
@@ -28,7 +41,7 @@ def process_order(request):
         )
 
     OrderLine.objects.bulk_create(order_lines)
-    
+
     send_order_email(
         order=order,
         order_lines=order_lines,
@@ -71,3 +84,23 @@ class OrderDetail(DetailView):
     def get_queryset(self):
         queryset = super().get_queryset()
         return queryset.filter(user=self.request.user)
+
+
+class SaleInvoicePdfView(View):
+    def get(self, request, *args, **kwargs):
+        try:
+            template = get_template('orders/detallePdf.html')
+            context = {
+                'order': Order.objects.get(pk=self.kwargs['pk']),
+                'comp': {'name': 'TIENDA PRISCILA', 'address': 'Marcabeli, Ecuador'},
+                'icon': '{}{}'.format(settings.MEDIA_URL, 'logo.png')
+                }
+            html = template.render(context)
+            response = HttpResponse(content_type= 'application/pdf')
+            #response['Content-Disposition'] = 'attachment: filename="report.pdf"'
+            pisaStatus = pisa.CreatePDF(
+                html, dest=response)
+            return response
+        except:
+            pass
+        return HttpResponseRedirect(reverse_lazy('erp:sale_list'))

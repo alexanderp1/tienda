@@ -15,7 +15,9 @@
                                 <th>ID</th>
                                 <th>Total</th>
                                 <th>Fecha</th>
-                                <th>Acciones</th>
+                                <th>Estado de Venta</th>
+                                <th>Proforma</th>
+                                <th>Factura</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -24,7 +26,18 @@
                                     <td>{{ order.id }}</td>
                                     <td>{{ order.total|money_format:"$" }}</td>
                                     <td>{{ order.created_at|date:'d/m/Y H:i' }}</td>
+                                    {% if order.comprado %}
+                                    <th><span class="badge badge-success">COMPLETADA</span></th>
+                                    {% else %}
+                                    <th><span class="badge badge-warning">PENDIENTE</span></th>
+                                    {% endif %}
                                     <td><a href="{% url 'order_detail' order.id %}" class="btn btn-info btn-sm">Ver detalle</a></td>
+                                    {% if order.comprado %}
+                                    <td><a href="{% url 'lista_pdf' order.id %}" class="btn btn-info btn-sm">Ver Factura</a></td>
+                                    {% else %}
+                                    <th><span class="badge badge-warning">PENDIENTE</span></th>
+                                    {% endif %}
+
                                 </tr>
                             {% empty %}
                                 <tr>
